@@ -4,7 +4,7 @@ namespace Payum\Be2Bill;
 use Payum\Be2Bill\Action\CaptureOffsiteAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
-class OffsitePaymentFactory extends DirectPaymentFactory
+class Be2BillOffsiteGatewayFactory extends Be2BillDirectGatewayFactory
 {
     /**
      * {@inheritDoc}
