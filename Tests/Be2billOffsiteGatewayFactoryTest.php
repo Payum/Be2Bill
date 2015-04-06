@@ -1,18 +1,18 @@
 <?php
 namespace Payum\Be2Bill\Tests;
 
-use Payum\Be2Bill\OffsitePaymentFactory;
+use Payum\Be2Bill\Be2BillOffsiteGatewayFactory;
 
-class OffsitePaymentFactoryTest extends \PHPUnit_Framework_TestCase
+class Be2billOffsiteGatewayFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function shouldImplementPaymentFactoryInterface()
+    public function shouldImplementGatewayFactoryInterface()
     {
-        $rc = new \ReflectionClass('Payum\Be2Bill\OffsitePaymentFactory');
+        $rc = new \ReflectionClass('Payum\Be2Bill\Be2BillOffsiteGatewayFactory');
 
-        $this->assertTrue($rc->implementsInterface('Payum\Core\PaymentFactoryInterface'));
+        $this->assertTrue($rc->implementsInterface('Payum\Core\GatewayFactoryInterface'));
     }
 
     /**
@@ -20,73 +20,73 @@ class OffsitePaymentFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function couldBeConstructedWithoutAnyArguments()
     {
-        new OffsitePaymentFactory();
+        new Be2BillOffsiteGatewayFactory();
     }
 
     /**
      * @test
      */
-    public function shouldCreateCorePaymentFactoryIfNotPassed()
+    public function shouldCreateCoreGatewayFactoryIfNotPassed()
     {
-        $factory = new OffsitePaymentFactory();
+        $factory = new Be2BillOffsiteGatewayFactory();
 
-        $this->assertAttributeInstanceOf('Payum\Core\PaymentFactory', 'corePaymentFactory', $factory);
+        $this->assertAttributeInstanceOf('Payum\Core\GatewayFactory', 'coreGatewayFactory', $factory);
     }
 
     /**
      * @test
      */
-    public function shouldUseCorePaymentFactoryPassedAsSecondArgument()
+    public function shouldUseCoreGatewayFactoryPassedAsSecondArgument()
     {
-        $corePaymentFactory = $this->getMock('Payum\Core\PaymentFactoryInterface');
+        $coreGatewayFactory = $this->getMock('Payum\Core\GatewayFactoryInterface');
 
-        $factory = new OffsitePaymentFactory(array(), $corePaymentFactory);
+        $factory = new Be2BillOffsiteGatewayFactory(array(), $coreGatewayFactory);
 
-        $this->assertAttributeSame($corePaymentFactory, 'corePaymentFactory', $factory);
+        $this->assertAttributeSame($coreGatewayFactory, 'coreGatewayFactory', $factory);
     }
 
     /**
      * @test
      */
-    public function shouldAllowCreatePayment()
+    public function shouldAllowCreateGateway()
     {
-        $factory = new OffsitePaymentFactory();
+        $factory = new Be2BillOffsiteGatewayFactory();
 
-        $payment = $factory->create(array('identifier' => 'anId', 'password' => 'aPass'));
+        $gateway = $factory->create(array('identifier' => 'anId', 'password' => 'aPass'));
 
-        $this->assertInstanceOf('Payum\Core\Payment', $payment);
+        $this->assertInstanceOf('Payum\Core\Gateway', $gateway);
 
-        $this->assertAttributeNotEmpty('apis', $payment);
-        $this->assertAttributeNotEmpty('actions', $payment);
+        $this->assertAttributeNotEmpty('apis', $gateway);
+        $this->assertAttributeNotEmpty('actions', $gateway);
 
-        $extensions = $this->readAttribute($payment, 'extensions');
+        $extensions = $this->readAttribute($gateway, 'extensions');
         $this->assertAttributeNotEmpty('extensions', $extensions);
     }
 
     /**
      * @test
      */
-    public function shouldAllowCreatePaymentWithCustomApi()
+    public function shouldAllowCreateGatewayWithCustomApi()
     {
-        $factory = new OffsitePaymentFactory();
+        $factory = new Be2BillOffsiteGatewayFactory();
 
-        $payment = $factory->create(array('payum.api' => new \stdClass()));
+        $gateway = $factory->create(array('payum.api' => new \stdClass()));
 
-        $this->assertInstanceOf('Payum\Core\Payment', $payment);
+        $this->assertInstanceOf('Payum\Core\Gateway', $gateway);
 
-        $this->assertAttributeNotEmpty('apis', $payment);
-        $this->assertAttributeNotEmpty('actions', $payment);
+        $this->assertAttributeNotEmpty('apis', $gateway);
+        $this->assertAttributeNotEmpty('actions', $gateway);
 
-        $extensions = $this->readAttribute($payment, 'extensions');
+        $extensions = $this->readAttribute($gateway, 'extensions');
         $this->assertAttributeNotEmpty('extensions', $extensions);
     }
 
     /**
      * @test
      */
-    public function shouldAllowCreatePaymentConfig()
+    public function shouldAllowCreateGatewayConfig()
     {
-        $factory = new OffsitePaymentFactory();
+        $factory = new Be2BillOffsiteGatewayFactory();
 
         $config = $factory->createConfig();
 
@@ -97,9 +97,9 @@ class OffsitePaymentFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldAddDefaultConfigPassedInConstructorWhileCreatingPaymentConfig()
+    public function shouldAddDefaultConfigPassedInConstructorWhileCreatingGatewayConfig()
     {
-        $factory = new OffsitePaymentFactory(array(
+        $factory = new Be2BillOffsiteGatewayFactory(array(
             'foo' => 'fooVal',
             'bar' => 'barVal',
         ));
@@ -120,7 +120,7 @@ class OffsitePaymentFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldConfigContainDefaultOptions()
     {
-        $factory = new OffsitePaymentFactory();
+        $factory = new Be2BillOffsiteGatewayFactory();
 
         $config = $factory->createConfig();
 
@@ -135,7 +135,7 @@ class OffsitePaymentFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldConfigContainFactoryNameAndTitle()
     {
-        $factory = new OffsitePaymentFactory();
+        $factory = new Be2BillOffsiteGatewayFactory();
 
         $config = $factory->createConfig();
 
@@ -156,7 +156,7 @@ class OffsitePaymentFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldThrowIfRequiredOptionsNotPassed()
     {
-        $factory = new OffsitePaymentFactory();
+        $factory = new Be2BillOffsiteGatewayFactory();
 
         $factory->create();
     }
