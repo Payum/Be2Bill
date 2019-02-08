@@ -1,5 +1,5 @@
 {
-    "name": "payum/be2bill",
+    "name": "visual-craft/be2bill",
     "type": "library",
     "description": "The Payum extension. It provides Be2Bill payment integration.",
     "keywords": ["payment", "be2bill"],
