@@ -10,7 +10,7 @@ use Payum\Core\HttpClientInterface;
 
 class Api
 {
-    const VERSION = '2.0';
+    const VERSION = '3.0';
 
     const EXECCODE_SUCCESSFUL = '0000';
 
@@ -164,6 +164,29 @@ class Api
     }
 
     /**
+     * @param array $params
+     *
+     * @param string $cardType
+     * @return array
+     */
+    public function hostedFieldsPayment(array $params, $cardType)
+    {
+        $params['OPERATIONTYPE'] = static::OPERATION_PAYMENT;
+        $params['VERSION'] = self::VERSION;
+        $params['IDENTIFIER'] = $this->resolveIdentifier($cardType);
+// TODO: Pass this if thsi sis required
+//        $params['CARDFULLNAME'] = 'Test Name';
+//        $params['CLIENTREFERRER'] = 'https://redesign-dev.annonces-legales.fr?orderid=12d34';
+
+        $params['HASH'] = $this->calculateHash($params);
+
+        return $this->doRequest([
+            'method' => 'payment',
+            'params' => $params
+        ]);
+    }
+
+    /**
      * Verify if the hash of the given parameter is correct
      *
      * @param array $params
@@ -194,7 +217,6 @@ class Api
         );
 
         $request = $this->messageFactory->createRequest('POST', $this->getApiEndpoint(), $headers, http_build_query($fields));
-
         $response = $this->client->send($request);
 
         if (false == ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300)) {
@@ -295,5 +317,25 @@ class Api
         }
 
         return hash('sha256', $clearString);
+    }
+
+    /**
+     * @return array
+     */
+    public function getObtainJsTokenCredentials()
+    {
+        return [
+            'id' => $this->options['apikeyid'],
+            'value' => $this->options['password'],
+        ];
+    }
+
+    private function resolveIdentifier($cardType)
+    {
+        if ($cardType === 'american_express') {
+            return $this->options['amex_identifier'];
+        }
+
+        return $this->options['identifier'];
     }
 }
