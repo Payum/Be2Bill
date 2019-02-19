@@ -1,0 +1,183 @@
+{% extends layout ?: "@PayumCore/layout.html.twig" %}
+
+{% block payum_body %}
+    {{ parent() }}
+    <form method="post" action="{{ actionUrl }}" id="cart" name="dalenysForm" onsubmit="return tokenizeHandler()">
+        <p>
+            <label for="cardfullname">Full name</label>
+            <input type="text" name="cardfullname" id="cardfullname">
+        </p>
+
+        <p>
+            <label for="cc-number">Card number</label>
+            <!-- Here is the card container -->
+            <span class="input-container" id="card-container"></span>
+        </p>
+
+        <p>
+            <label>Card expiry</label>
+            <!-- Here is the expiry container -->
+            <span class="input-container" id="expiry-container"></span>
+        </p>
+
+        <p>
+            <label>Card security code</label>
+            <!-- Here is the cryptogram container -->
+            <span class="input-container" id="cvv-container"></span>
+        </p>
+
+        <p class="submit">
+            <input type="submit" value="Pay">
+        </p>
+
+        <!-- This hidden input will receive callback values -->
+        <input type="hidden" name="hfToken" id="hfToken">
+        <input type="hidden" name="cardType" id="cardType">
+        <input type="hidden" name="execCode" id="execCode">
+    </form>
+{% endblock %}
+
+{% block payum_javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ hostedFieldsJsLibUrl }}"></script>
+
+    <script>
+        var style = {
+            "input": {
+                "font-size": "1em",
+            },
+            "::placeholder": {
+                "font-size": "1em",
+                "color": "#777",
+                "font-style": "italic"
+            }
+        };
+
+        var hfields = dalenys.hostedFields({
+            key: {
+                id: '{{ credentials.id }}',
+                value: '{{ credentials.value }}'
+            },
+            fields: {
+                'card': {
+                    id: 'card-container',
+                    style: style
+                },
+                'expiry': {
+                    id: 'expiry-container',
+                    placeholder: 'MM/YY',
+                    style: style
+                },
+                'cryptogram': {
+                    id: 'cvv-container',
+                    style: style
+                }
+            }
+        });
+
+        hfields.load();
+
+        function tokenizeHandler() {
+            hfields.createToken(function(result) {
+                document.getElementById('hfToken').value = result.hfToken;
+                document.getElementById('cardType').value = result.cardType;
+                document.getElementById('execCode').value = result.execCode;
+                document.dalenysForm.submit();
+            });
+
+            return false;
+        }
+    </script>
+{% endblock %}
+
+{% block payum_stylesheets %}
+    <style>
+        body * {
+        font-family: "Open Sans", "Century Gothic", "Calibri", "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size: 1em;
+        transition: all 250ms ease-in-out;
+    }
+    form {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        overflow: hidden;
+        padding: 21px;
+    }
+    form p,
+    form p label {
+        display: block;
+        width: 100%;
+    }
+    input[type=text] {
+        display: inline-block;
+        max-width: 100%;
+        height: 2em;
+        overflow: hidden;
+        box-sizing: border-box;
+        margin-top: 7px;
+        padding: 5px 7px 3px 7px;
+        border: 1px solid rgba(0, 0, 0, .5);
+        border-radius: 5px;
+        transition: all 250ms ease-in-out;
+        width: 250px;
+    }
+    .input-container {
+        display: inline-block;
+        max-width: 100%;
+        height: 2em;
+        box-sizing: border-box;
+        margin-top: 7px;
+        padding: 5px 7px 3px 7px;
+        border: 1px solid rgba(0, 0, 0, .5);
+        border-radius: 5px;
+        transition: all 250ms ease-in-out;
+    }
+    #card-container {
+        width: 250px;
+    }
+    #expiry-container,
+    #cvv-container {
+        width: 91px;
+    }
+    label {
+        vertical-align: super;
+    }
+    p {
+        margin-bottom: 14px;
+    }
+    .submit {
+        margin-top: 35px;
+        text-align: center;
+    }
+    input[type=submit] {
+        width: 100%;
+        max-width: 300px;
+        padding: 3px 14px 7px 14px;
+        border: 0;
+        border-top: 1px solid rgba(255, 255, 255, 1);
+        border-radius: 5px;
+        background: #3e96db;
+        font-size: 1.5em;
+        font-family: "Titillium Web", Arial, sans-serif;
+        font-weight: 600;
+        color: white;
+        vertical-align: baseline;
+        cursor: pointer;
+        transition: all 500ms;
+    }
+    input[type=submit]:hover {
+        background-color: #5db3f5;
+    }
+
+    /* Hosted fields auto set class */
+    .hosted-fields-invalid-state {
+        border: 2px solid red;
+    }
+
+    .hosted-fields-valid-state {
+        border: 2px solid green;
+    }
+    </style>
+{% endblock %}
