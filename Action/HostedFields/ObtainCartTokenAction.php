@@ -54,6 +54,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
 
         if ($getHttpRequest->method === 'POST' && isset($getHttpRequest->request['hfToken'])) {
             $model['HFTOKEN'] = $getHttpRequest->request['hfToken'];
+            $model['CARDFULLNAME'] = $getHttpRequest->request['cardfullname'];
 
             $executePayment = new ExecutePayment(
                 $request->getToken(),

@@ -174,8 +174,7 @@ class Api
         $params['OPERATIONTYPE'] = static::OPERATION_PAYMENT;
         $params['VERSION'] = self::VERSION;
         $params['IDENTIFIER'] = $this->resolveIdentifier($cardType);
-// TODO: Pass this if thsi sis required
-//        $params['CARDFULLNAME'] = 'Test Name';
+        $params['APIKEYID'] = $this->options['apikeyid'];
 //        $params['CLIENTREFERRER'] = 'https://redesign-dev.annonces-legales.fr?orderid=12d34';
 
         $params['HASH'] = $this->calculateHash($params);
@@ -330,6 +329,10 @@ class Api
         ];
     }
 
+    /**
+     * @param string $cardType
+     * @return string
+     */
     private function resolveIdentifier($cardType)
     {
         if ($cardType === 'american_express') {

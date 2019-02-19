@@ -4,8 +4,8 @@
     {{ parent() }}
     <form method="post" action="{{ actionUrl }}" id="cart" name="dalenysForm" onsubmit="return tokenizeHandler()">
         <p>
-            <label>Full name</label>
-            <input type="text">
+            <label for="cardfullname">Full name</label>
+            <input type="text" name="cardfullname" id="cardfullname">
         </p>
 
         <p>
