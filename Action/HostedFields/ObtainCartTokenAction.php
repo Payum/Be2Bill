@@ -34,7 +34,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
         $this->template = $template;
         $this->apiClass = Api::class;
     }
-    
+
     /**
      * @param mixed $request
      * @throws RequestNotSupportedException if the action dose not support the request.
