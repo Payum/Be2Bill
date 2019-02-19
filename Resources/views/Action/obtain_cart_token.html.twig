@@ -39,7 +39,7 @@
 
 {% block payum_javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="https://js.sandbox.be2bill.com/hosted-fields/v1/hosted-fields.min.js"></script>
+    <script type="text/javascript" src="{{ hostedFieldsJsLibUrl }}"></script>
 
     <script>
         var style = {

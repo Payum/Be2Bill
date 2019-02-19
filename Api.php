@@ -242,6 +242,17 @@ class Api
     }
 
     /**
+     * @return string
+     */
+    public function getHostedFieldsJsLibUrl()
+    {
+        return $this->options['sandbox'] ?
+            'https://js.sandbox.be2bill.com/hosted-fields/v1/hosted-fields.min.js' :
+            'https://js.be2bill.com/hosted-fields/v1/hosted-fields.min.js'
+        ;
+    }
+
+    /**
      * @param  array $params
      *
      * @return array

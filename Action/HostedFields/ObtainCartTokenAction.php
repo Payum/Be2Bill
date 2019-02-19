@@ -73,6 +73,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
         $this->gateway->execute($renderTemplate = new RenderTemplate($this->template, [
             'credentials' => $api->getObtainJsTokenCredentials(),
             'actionUrl' => $token ? $token->getTargetUrl() : null,
+            'hostedFieldsJsLibUrl' => $api->getHostedFieldsJsLibUrl(),
         ]));
 
         throw new HttpResponse($renderTemplate->getResult());
