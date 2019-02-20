@@ -7,6 +7,7 @@ use Payum\Core\Exception\InvalidArgumentException;
 use Payum\Core\Exception\Http\HttpException;
 use Payum\Core\Exception\LogicException;
 use Payum\Core\HttpClientInterface;
+use Request\Callback;
 
 class Api
 {
@@ -175,7 +176,6 @@ class Api
         $params['VERSION'] = self::VERSION;
         $params['IDENTIFIER'] = $this->resolveIdentifier($cardType);
         $params['APIKEYID'] = $this->options['apikeyid'];
-//        $params['CLIENTREFERRER'] = 'https://redesign-dev.annonces-legales.fr?orderid=12d34';
 
         $params['HASH'] = $this->calculateHash($params);
 
@@ -327,6 +327,30 @@ class Api
         }
 
         return hash('sha256', $clearString);
+    }
+
+    /**
+     * @param array $requestData
+     * @return Callback
+     */
+    public function parseRequest(array $requestData)
+    {
+        $hash = $requestData['HASH'];
+        $orderId = $requestData['TRANSACTIONID'];
+        $transactionId = $requestData['ORDERID'];
+        $execCode = $requestData['EXECCODE'];
+
+        if (!$hash || !$orderId || !$transactionId || !$execCode) {
+            throw new \InvalidArgumentException('Missed required Request data field');
+        }
+
+        unset($requestData['HASH']);
+
+        if ($this->calculateHash($requestData) !== $hash) {
+            throw new \InvalidArgumentException('Corrupted Data');
+        }
+
+        return new Callback($execCode, $orderId, $transactionId);
     }
 
     /**
