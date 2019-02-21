@@ -7,7 +7,7 @@ use Payum\Core\Exception\InvalidArgumentException;
 use Payum\Core\Exception\Http\HttpException;
 use Payum\Core\Exception\LogicException;
 use Payum\Core\HttpClientInterface;
-use Request\Callback;
+use Payum\Be2Bill\Request\Callback;
 
 class Api
 {
