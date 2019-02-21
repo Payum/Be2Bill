@@ -43,6 +43,8 @@ class Be2BillHostedFieldsGatewayFactory extends GatewayFactory
                 'apikeyid' => '',
                 // APIKEY
                 'password' => '',
+                'secret' => '',
+                'amex_secret' => '',
                 'sandbox' => true,
             ];
 
@@ -58,6 +60,8 @@ class Be2BillHostedFieldsGatewayFactory extends GatewayFactory
                         'amex_identifier' => $config['amex_identifier'],
                         'apikeyid' => $config['apikeyid'],
                         'password' => $config['password'],
+                        'secret' => $config['secret'],
+                        'amex_secret' => $config['amex_secret'],
                         'sandbox' => $config['sandbox'],
                     ],
                     $config['payum.http_client'],

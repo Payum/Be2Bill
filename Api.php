@@ -175,9 +175,8 @@ class Api
         $params['OPERATIONTYPE'] = static::OPERATION_PAYMENT;
         $params['VERSION'] = self::VERSION;
         $params['IDENTIFIER'] = $this->resolveIdentifier($cardType);
-        $params['APIKEYID'] = $this->options['apikeyid'];
 
-        $params['HASH'] = $this->calculateHash($params);
+        $params['HASH'] = $this->calculateHashForSecret($params, $this->resolveHostedFieldsSecret($cardType));
 
         return $this->doRequest([
             'method' => 'payment',
@@ -318,12 +317,23 @@ class Api
      */
     public function calculateHash(array $params)
     {
+        return $this->calculateHashForSecret($params, $this->options['password']);
+    }
+
+    /**
+     * @param array $params
+     *
+     * @param $secret
+     * @return string
+     */
+    public function calculateHashForSecret(array $params, $secret)
+    {
         #Alpha sort
         ksort($params);
 
-        $clearString = $this->options['password'];
+        $clearString = $secret;
         foreach ($params as $key => $value) {
-            $clearString .= $key.'='.$value.$this->options['password'];
+            $clearString .= $key.'='.$value.$secret;
         }
 
         return hash('sha256', $clearString);
@@ -345,8 +355,9 @@ class Api
         }
 
         unset($requestData['HASH']);
+        $secret = $this->resolveHostedFieldsSecret($requestData['CARDTYPE']);
 
-        if ($this->calculateHash($requestData) !== $hash) {
+        if ($this->calculateHashForSecret($requestData, $secret) !== $hash) {
             throw new \InvalidArgumentException('Corrupted Data');
         }
 
@@ -370,10 +381,27 @@ class Api
      */
     private function resolveIdentifier($cardType)
     {
+        $cardType = strtolower($cardType);
+
         if ($cardType === 'american_express') {
             return $this->options['amex_identifier'];
         }
 
         return $this->options['identifier'];
+    }
+
+    /**
+     * @param string $cardType
+     * @return string
+     */
+    private function resolveHostedFieldsSecret($cardType)
+    {
+        $cardType = strtolower($cardType);
+
+        if ($cardType === 'american_express') {
+            return $this->options['amex_secret'];
+        }
+
+        return $this->options['secret'];
     }
 }
