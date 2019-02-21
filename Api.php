@@ -336,8 +336,8 @@ class Api
     public function parseCallbackRequest(array $requestData)
     {
         $hash = $requestData['HASH'];
-        $orderId = $requestData['TRANSACTIONID'];
-        $transactionId = $requestData['ORDERID'];
+        $orderId = $requestData['ORDERID'];
+        $transactionId = $requestData['TRANSACTIONID'];
         $execCode = $requestData['EXECCODE'];
 
         if (!$hash || !$orderId || !$transactionId || !$execCode) {
