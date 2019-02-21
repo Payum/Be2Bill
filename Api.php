@@ -333,7 +333,7 @@ class Api
      * @param array $requestData
      * @return Callback
      */
-    public function parseRequest(array $requestData)
+    public function parseCallbackRequest(array $requestData)
     {
         $hash = $requestData['HASH'];
         $orderId = $requestData['TRANSACTIONID'];
