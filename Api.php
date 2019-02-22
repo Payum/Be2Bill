@@ -252,6 +252,17 @@ class Api
     }
 
     /**
+     * @return string
+     */
+    public function getBrandDetectorJsLibUrl()
+    {
+        return $this->options['sandbox'] ?
+            'https://js.sandbox.be2bill.com/brand-detector/v1/brand-detector.min.js' :
+            'https://js.be2bill.com/brand-detector/v1/brand-detector.min.js'
+        ;
+    }
+
+    /**
      * @param  array $params
      *
      * @return array

@@ -34,11 +34,14 @@
         <input type="hidden" name="hfToken" id="hfToken">
         <input type="hidden" name="cardType" id="cardType">
         <input type="hidden" name="execCode" id="execCode">
+        <input type="hidden" name="brand" id="brand">
     </form>
 {% endblock %}
 
 {% block payum_javascripts %}
     {{ parent() }}
+    {#TODO#}
+    {#<script type="text/javascript" src="{{ brandDetectorJsLibUrl }}"></script>#}
     <script type="text/javascript" src="{{ hostedFieldsJsLibUrl }}"></script>
 
     <script>
@@ -79,10 +82,21 @@
 
         function tokenizeHandler() {
             hfields.createToken(function(result) {
-                document.getElementById('hfToken').value = result.hfToken;
-                document.getElementById('cardType').value = result.cardType;
-                document.getElementById('execCode').value = result.execCode;
-                document.dalenysForm.submit();
+                // TODO
+                // dalenys.detectBrandsByBin(document.getElementById('hosted-fields-card').value, function (brands) {
+                    let brand = 'cb';
+
+                    // if (brands && brands[0]) {
+                    //     brand = brands[0]['brand'];
+                    // }
+
+                    document.getElementById('hfToken').value = result.hfToken;
+                    document.getElementById('cardType').value = result.cardType;
+                    document.getElementById('execCode').value = result.execCode;
+                    document.getElementById('brand').value = brand;
+                    document.dalenysForm.submit();
+                // });
+
             });
 
             return false;

@@ -55,6 +55,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
         if ($getHttpRequest->method === 'POST' && isset($getHttpRequest->request['hfToken'])) {
             $model['HFTOKEN'] = $getHttpRequest->request['hfToken'];
             $model['CARDFULLNAME'] = $getHttpRequest->request['cardfullname'];
+            $model['SELECTEDBRAND'] = $getHttpRequest->request['brand'];
 
             $executePayment = new ExecutePayment(
                 $request->getToken(),
@@ -74,6 +75,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
             'credentials' => $api->getObtainJsTokenCredentials(),
             'actionUrl' => $token ? $token->getTargetUrl() : null,
             'hostedFieldsJsLibUrl' => $api->getHostedFieldsJsLibUrl(),
+            'brandDetectorJsLibUrl' => $api->getBrandDetectorJsLibUrl(),
         ]));
 
         throw new HttpResponse($renderTemplate->getResult());
