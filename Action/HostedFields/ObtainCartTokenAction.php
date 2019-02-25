@@ -76,6 +76,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
             'actionUrl' => $token ? $token->getTargetUrl() : null,
             'hostedFieldsJsLibUrl' => $api->getHostedFieldsJsLibUrl(),
             'brandDetectorJsLibUrl' => $api->getBrandDetectorJsLibUrl(),
+            'token' => $token,
         ]));
 
         throw new HttpResponse($renderTemplate->getResult());
