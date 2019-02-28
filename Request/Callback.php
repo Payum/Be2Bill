@@ -7,7 +7,7 @@ use Payum\Be2Bill\Api;
 class Callback
 {
     /**
-     * @var bool
+     * @var string
      */
     private $execCode;
 
@@ -41,7 +41,7 @@ class Callback
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public function getExecCode()
     {
