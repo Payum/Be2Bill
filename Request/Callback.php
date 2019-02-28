@@ -22,21 +22,28 @@ class Callback
     private $transactionId;
 
     /**
+     * @var string
+     */
+    private $message;
+
+    /**
      * @param bool $execCode
      * @param string $orderId
      * @param string $transactionId
+     * @param string $message
      */
-    public function __construct($execCode, $orderId, $transactionId)
+    public function __construct($execCode, $orderId, $transactionId, $message)
     {
         $this->execCode = $execCode;
         $this->orderId = $orderId;
         $this->transactionId = $transactionId;
+        $this->message = $message;
     }
 
     /**
      * @return bool
      */
-    public function execCode()
+    public function getExecCode()
     {
         return $this->execCode;
     }
@@ -55,6 +62,14 @@ class Callback
     public function getTransactionId()
     {
         return $this->transactionId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 
     /**

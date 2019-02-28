@@ -360,6 +360,7 @@ class Api
         $orderId = $requestData['ORDERID'];
         $transactionId = $requestData['TRANSACTIONID'];
         $execCode = $requestData['EXECCODE'];
+        $message = $requestData['MESSAGE'];
 
         if (!$hash || !$orderId || !$transactionId || !$execCode) {
             throw new \InvalidArgumentException('Missed required Request data field');
@@ -372,7 +373,7 @@ class Api
             throw new \InvalidArgumentException('Corrupted Data');
         }
 
-        return new Callback($execCode, $orderId, $transactionId);
+        return new Callback($execCode, $orderId, $transactionId, $message);
     }
 
     /**
