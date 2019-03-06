@@ -37,10 +37,6 @@ class ExecutePaymentAction implements ActionInterface, ApiAwareInterface, Gatewa
         $model = new ArrayObject($request->getModel());
         $model->validateNotEmpty(['HFTOKEN']);
 
-        if ($request->getExecCode() === Api::EXECCODE_3DSECURE_IDENTIFICATION_REQUIRED) {
-            throw new HttpResponse(base64_decode($model['3DSECUREHTML']), 302);
-        }
-
         // Unsuccess
         if ($request->getExecCode() !== Api::EXECCODE_SUCCESSFUL) {
             return;
@@ -60,11 +56,15 @@ class ExecutePaymentAction implements ActionInterface, ApiAwareInterface, Gatewa
         $api = $this->api;
         $result = $api->hostedFieldsPayment($model->toUnsafeArray(), $request->getCardType());
 
+        if ($result->EXECCODE === Api::EXECCODE_3DSECURE_IDENTIFICATION_REQUIRED) {
+            throw new HttpResponse(base64_decode($result->{'3DSECUREHTML'}));
+        }
+
         $model->replace((array) $result);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}q
      */
     public function supports($request)
     {
