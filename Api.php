@@ -388,6 +388,14 @@ class Api
     }
 
     /**
+     * @return mixed
+     */
+    public function getIsForce3dSecure()
+    {
+        return $this->options['force_3d_secure'];
+    }
+
+    /**
      * @param string $cardType
      * @return string
      */

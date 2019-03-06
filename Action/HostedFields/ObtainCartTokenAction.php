@@ -57,6 +57,14 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
             $model['CARDFULLNAME'] = $getHttpRequest->request['cardfullname'];
             $model['SELECTEDBRAND'] = $getHttpRequest->request['brand'];
 
+            /** @var Api $api */
+            $api = $this->api;
+
+            if ($api->getIsForce3dSecure()) {
+                $model['3DSECUREDISPLAYMODE'] = 'main';
+                $model['3DSECURE'] = true;
+            }
+
             $executePayment = new ExecutePayment(
                 $request->getToken(),
                 $getHttpRequest->request['cardType'],

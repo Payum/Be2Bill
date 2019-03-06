@@ -46,6 +46,7 @@ class Be2BillHostedFieldsGatewayFactory extends GatewayFactory
                 'secret' => '',
                 'amex_secret' => '',
                 'sandbox' => true,
+                'force_3d_secure' => false,
             ];
 
             $config->defaults($config['payum.default_options']);
@@ -63,6 +64,7 @@ class Be2BillHostedFieldsGatewayFactory extends GatewayFactory
                         'secret' => $config['secret'],
                         'amex_secret' => $config['amex_secret'],
                         'sandbox' => $config['sandbox'],
+                        'force_3d_secure' => $config['force_3d_secure'],
                     ],
                     $config['payum.http_client'],
                     $config['httplug.message_factory']
