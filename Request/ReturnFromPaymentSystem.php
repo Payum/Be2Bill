@@ -1,6 +1,6 @@
 <?php
 
-namespace Request;
+namespace Payum\Be2Bill\Request;
 
 use Payum\Be2Bill\Api;
 
