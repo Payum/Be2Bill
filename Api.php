@@ -8,7 +8,7 @@ use Payum\Core\Exception\Http\HttpException;
 use Payum\Core\Exception\LogicException;
 use Payum\Core\HttpClientInterface;
 use Payum\Be2Bill\Request\Callback;
-use Request\ReturnFromPaymentSystem;
+use Payum\Be2Bill\Request\ReturnFromPaymentSystem;
 
 class Api
 {
