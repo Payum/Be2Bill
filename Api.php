@@ -8,6 +8,7 @@ use Payum\Core\Exception\Http\HttpException;
 use Payum\Core\Exception\LogicException;
 use Payum\Core\HttpClientInterface;
 use Payum\Be2Bill\Request\Callback;
+use Request\ReturnFromPaymentSystem;
 
 class Api
 {
@@ -374,6 +375,41 @@ class Api
         }
 
         return new Callback($execCode, $orderId, $transactionId, $message);
+    }
+
+    /**
+     * @param array $requestData
+     * @return ReturnFromPaymentSystem
+     */
+    public function parseReturnFromPaymentSystemRequest(array $requestData)
+    {
+        $hash = $requestData['HASH'];
+        $orderId = $requestData['ORDERID'];
+        $transactionId = $requestData['TRANSACTIONID'];
+        $execCode = $requestData['EXECCODE'];
+        $message = $requestData['MESSAGE'];
+
+        if (!$hash || !$orderId || !$transactionId || !$execCode) {
+            throw new \InvalidArgumentException('Missed required Request data field');
+        }
+
+        unset($requestData['HASH']);
+        $secret = $this->resolveHostedFieldsSecret($requestData['CARDTYPE']);
+
+        if ($this->calculateHashForSecret($requestData, $secret) !== $hash) {
+            throw new \InvalidArgumentException('Corrupted Data');
+        }
+
+        return new ReturnFromPaymentSystem(
+            $execCode,
+            $orderId,
+            $transactionId,
+            $message,
+            $requestData['3DSECUREAUTHENTICATIONSTATUS'],
+            $requestData['3DSECURESIGNATURESTATUS'],
+            $requestData['3DSGLOBALSTATUS'],
+            $requestData['CARD3DSECUREENROLLED']
+        );
     }
 
     /**
