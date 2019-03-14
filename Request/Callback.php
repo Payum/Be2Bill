@@ -14,7 +14,7 @@ class Callback
     /**
      * @var string
      */
-    private $orderId;
+    private $paymentNumber;
 
     /**
      * @var string
@@ -28,14 +28,14 @@ class Callback
 
     /**
      * @param bool $execCode
-     * @param string $orderId
+     * @param string $paymentNumber
      * @param string $transactionId
      * @param string $message
      */
-    public function __construct($execCode, $orderId, $transactionId, $message)
+    public function __construct($execCode, $paymentNumber, $transactionId, $message)
     {
         $this->execCode = $execCode;
-        $this->orderId = $orderId;
+        $this->paymentNumber = $paymentNumber;
         $this->transactionId = $transactionId;
         $this->message = $message;
     }
@@ -51,9 +51,9 @@ class Callback
     /**
      * @return string
      */
-    public function getOrderId()
+    public function getPaymentNumber()
     {
-        return $this->orderId;
+        return $this->paymentNumber;
     }
 
     /**

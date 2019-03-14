@@ -14,7 +14,7 @@ class ReturnFromPaymentSystem
     /**
      * @var string
      */
-    private $orderId;
+    private $paymentNumber;
 
     /**
      * @var string
@@ -48,13 +48,13 @@ class ReturnFromPaymentSystem
 
     /**
      * @param bool $execCode
-     * @param string $orderId
+     * @param string $paymentNumber
      * @param string $transactionId
      * @param string $message
      */
     public function __construct(
         $execCode,
-        $orderId,
+        $paymentNumber,
         $transactionId,
         $message,
         $secureStatus,
@@ -63,7 +63,7 @@ class ReturnFromPaymentSystem
         $secureEnrollStatus
     ) {
         $this->execCode = $execCode;
-        $this->orderId = $orderId;
+        $this->paymentNumber = $paymentNumber;
         $this->transactionId = $transactionId;
         $this->message = $message;
         $this->secureStatus = $secureStatus;
@@ -83,9 +83,9 @@ class ReturnFromPaymentSystem
     /**
      * @return string
      */
-    public function getOrderId()
+    public function getPaymentNumber()
     {
-        return $this->orderId;
+        return $this->paymentNumber;
     }
 
     /**
