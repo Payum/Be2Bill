@@ -18,6 +18,8 @@ class Api
 
     const EXECCODE_3DSECURE_IDENTIFICATION_REQUIRED = '0001';
 
+    const EXECCODE_SDD_NEED_PROCESS_IBAN = '0002';
+
     const EXECCODE_PARAMETER_X_MISSING = '1001';
 
     const EXECCODE_INVALID_PARAMETER_X = '1002';
@@ -186,6 +188,46 @@ class Api
     }
 
     /**
+     * @param array $params
+     * @return array
+     */
+    public function sddPayment(array $params)
+    {
+        $supportedParams = [
+            'ORDERID' => null,
+            'AMOUNT' => null,
+            'CLIENTIDENT' => null,
+            'CLIENTEMAIL' => null,
+            'CLIENTGENDER' => null,
+            'BILLINGFIRSTNAME' => null,
+            'BILLINGLASTNAME' => null,
+            'BILLINGADDRESS' => null,
+            'BILLINGCITY' => null,
+            'BILLINGCOUNTRY' => null,
+            'BILLINGMOBILEPHONE' => null,
+            'BILLINGPOSTALCODE' => null,
+            'CLIENTUSERAGENT' => null,
+            'CLIENTIP' => null,
+            'DESCRIPTION' => null,
+        ];
+
+        $params = array_filter(array_replace(
+            $supportedParams,
+            array_intersect_key($params, $supportedParams)
+        ));
+
+        $params['OPERATIONTYPE'] = static::OPERATION_PAYMENT;
+        $params['VERSION'] = self::VERSION;
+        $params['IDENTIFIER'] = $this->options['sdd_identifier'];
+        $params['HASH'] = $this->calculateHashForSecret($params, $this->options['sdd_secret']);
+
+        return $this->doRequest([
+            'method' => 'payment',
+            'params' => $params
+        ]);
+    }
+
+    /**
      * Verify if the hash of the given parameter is correct
      *
      * @param array $params
@@ -212,6 +254,7 @@ class Api
     protected function doRequest(array $fields)
     {
         $headers = array(
+            'Content-Type' => 'application/x-www-form-urlencoded',
             'Content-Type' => 'application/x-www-form-urlencoded',
         );
 
@@ -368,7 +411,7 @@ class Api
         }
 
         unset($requestData['HASH']);
-        $secret = $this->resolveHostedFieldsSecret($requestData['CARDTYPE']);
+        $secret = $this->resolveSecretByIdentifier($requestData['IDENTIFIER']);
 
         if ($this->calculateHashForSecret($requestData, $secret) !== $hash) {
             throw new \InvalidArgumentException('Corrupted Data');
@@ -456,6 +499,27 @@ class Api
 
         if ($cardType === 'american_express') {
             return $this->options['amex_secret'];
+        }
+
+        return $this->options['secret'];
+    }
+
+    /**
+     * @param string $identifier
+     * @return string
+     */
+    private function resolveSecretByIdentifier($identifier)
+    {
+        if ($identifier === $this->options['identifier']) {
+            return $this->options['secret'];
+        }
+
+        if ($identifier === $this->options['amex_identifier']) {
+            return $this->options['amex_secret'];
+        }
+
+        if ($identifier === $this->options['sdd_identifier']) {
+            return $this->options['sdd_secret'];
         }
 
         return $this->options['secret'];

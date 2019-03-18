@@ -1,0 +1,44 @@
+{% extends layout ?: "@PayumCore/layout.html.twig" %}
+
+{% block payum_body %}
+    {{ parent() }}
+    <form method="post" action="{{ actionUrl }}">
+        <p>
+            <label for="BILLINGFIRSTNAME">First name</label>
+            <input type="text" name="BILLINGFIRSTNAME" id="BILLINGFIRSTNAME">
+        </p>
+
+        <p>
+            <label for="BILLINGLASTNAME">Last name</label>
+            <input type="text" name="BILLINGLASTNAME" id="BILLINGLASTNAME">
+        </p>
+
+        <p>
+            <label for="BILLINGADDRESS">Address</label>
+            <input type="text" name="BILLINGADDRESS" id="BILLINGADDRESS">
+        </p>
+
+        <p>
+            <label for="BILLINGCITY">City</label>
+            <input type="text" name="BILLINGCITY" id="BILLINGCITY">
+        </p>
+
+        <p>
+            <label for="BILLINGCOUNTRY">Country</label>
+            <input type="text" name="BILLINGCOUNTRY" id="BILLINGCOUNTRY">
+        </p>
+
+        <p>
+            <label for="BILLINGMOBILEPHONE">Phone number</label>
+            <input type="text" name="BILLINGMOBILEPHONE" id="BILLINGMOBILEPHONE">
+        </p>
+
+        <p>
+            <label for="BILLINGPOSTALCODE">Postal code</label>
+            <input type="text" name="BILLINGPOSTALCODE" id="BILLINGPOSTALCODE">
+        </p>
+        <p class="submit">
+            <input type="submit" value="Pay">
+        </p>
+    </form>
+{% endblock %}
