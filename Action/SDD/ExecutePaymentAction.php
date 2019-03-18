@@ -65,7 +65,7 @@ class ExecutePaymentAction implements ActionInterface, ApiAwareInterface, Gatewa
     }
 
     /**
-     * {@inheritDoc}q
+     * {@inheritDoc}
      */
     public function supports($request)
     {
