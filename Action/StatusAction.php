@@ -32,6 +32,12 @@ class StatusAction implements ActionInterface
             return;
         }
 
+        if (Api::EXECCODE_SDD_PENDING_PROCESSING === $model['EXECCODE']) {
+            $request->markPending();
+
+            return;
+        }
+
         if (Api::EXECCODE_TIME_OUT  === $model['EXECCODE']) {
             $request->markUnknown();
 
