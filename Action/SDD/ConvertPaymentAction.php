@@ -5,7 +5,6 @@ namespace Payum\Be2Bill\Action\SDD;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
-use Payum\Be2Bill\Model\PaymentInterface;
 use Payum\Core\Model\PaymentInterface as PayumPaymentInterface;
 use Payum\Core\Request\Convert;
 
@@ -44,7 +43,7 @@ class ConvertPaymentAction implements ActionInterface
     {
         return
             $request instanceof Convert &&
-            $request->getSource() instanceof PaymentInterface &&
+            $request->getSource() instanceof PayumPaymentInterface &&
             $request->getTo() === 'array'
         ;
     }
