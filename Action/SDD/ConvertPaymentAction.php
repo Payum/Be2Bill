@@ -6,6 +6,7 @@ use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Be2Bill\Model\PaymentInterface;
+use Payum\Core\Model\PaymentInterface as PayumPaymentInterface;
 use Payum\Core\Request\Convert;
 
 class ConvertPaymentAction implements ActionInterface
@@ -19,7 +20,7 @@ class ConvertPaymentAction implements ActionInterface
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
-        /** @var PaymentInterface $payment */
+        /** @var PayumPaymentInterface $payment */
         $payment = $request->getSource();
 
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
@@ -28,6 +29,10 @@ class ConvertPaymentAction implements ActionInterface
         $details['CLIENTIDENT'] = $payment->getClientId();
         $details['CLIENTEMAIL'] = $payment->getClientEmail();
         $details['ORDERID'] = $payment->getNumber();
+
+        if ($payment instanceof PaymentInterface) {
+            $details['CLIENTGENDER'] = $payment->getClientGender();
+        }
 
         $request->setResult((array) $details);
     }
