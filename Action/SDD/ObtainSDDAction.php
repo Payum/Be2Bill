@@ -65,7 +65,8 @@ class ObtainSDDAction implements ActionInterface, GatewayAwareInterface, ApiAwar
                 $getHttpRequest->request['BILLINGCITY'],
                 $getHttpRequest->request['BILLINGCOUNTRY'],
                 $getHttpRequest->request['BILLINGMOBILEPHONE'],
-                $getHttpRequest->request['BILLINGPOSTALCODE']
+                $getHttpRequest->request['BILLINGPOSTALCODE'],
+                $getHttpRequest->request['CLIENTGENDER']
             );
             $executePayment->setModel($model);
             $this->gateway->execute($executePayment);

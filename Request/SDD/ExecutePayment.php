@@ -42,6 +42,11 @@ class ExecutePayment extends Generic
     private $postalCode;
 
     /**
+     * @var string
+     */
+    private $clientGender;
+
+    /**
      * @param mixed $model
      * @param string $firstName
      * @param string $lastName
@@ -50,8 +55,9 @@ class ExecutePayment extends Generic
      * @param string $country
      * @param string $phone
      * @param string $postalCode
+     * @param string $clientGender
      */
-    public function __construct($model, $firstName, $lastName, $address, $city, $country, $phone, $postalCode)
+    public function __construct($model, $firstName, $lastName, $address, $city, $country, $phone, $postalCode, $clientGender)
     {
         parent::__construct($model);
 
@@ -63,6 +69,7 @@ class ExecutePayment extends Generic
         $this->country = $country;
         $this->phone = $phone;
         $this->postalCode = $postalCode;
+        $this->clientGender = $clientGender;
     }
 
     /**
@@ -119,5 +126,13 @@ class ExecutePayment extends Generic
     public function getPostalCode()
     {
         return $this->postalCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientGender()
+    {
+        return $this->clientGender;
     }
 }

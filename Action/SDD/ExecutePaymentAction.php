@@ -52,6 +52,7 @@ class ExecutePaymentAction implements ActionInterface, ApiAwareInterface, Gatewa
         $model['BILLINGCOUNTRY'] = $request->getCountry();
         $model['BILLINGMOBILEPHONE'] = $request->getPhone();
         $model['BILLINGPOSTALCODE'] = $request->getPostalCode();
+        $model['CLIENTGENDER'] = $request->getClientGender();
 
         /** @var Api $api */
         $api = $this->api;
