@@ -141,6 +141,6 @@ class ReturnFromPaymentSystem
      */
     public function isSuccessful()
     {
-         return $this->execCode === Api::EXECCODE_SUCCESSFUL;
+         return ($this->execCode === Api::EXECCODE_SUCCESSFUL) || ($this->execCode === Api::EXECCODE_SDD_PENDING_PROCESSING);
     }
 }

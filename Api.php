@@ -439,7 +439,7 @@ class Api
         }
 
         unset($requestData['HASH']);
-        $secret = $this->resolveHostedFieldsSecret($requestData['CARDTYPE']);
+        $secret = $this->resolveSecretByIdentifier($requestData['IDENTIFIER']);
 
         if ($this->calculateHashForSecret($requestData, $secret) !== $hash) {
             throw new \InvalidArgumentException('Corrupted Data');
