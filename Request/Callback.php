@@ -79,4 +79,12 @@ class Callback
     {
          return $this->execCode === Api::EXECCODE_SUCCESSFUL;
     }
+
+    /**
+     * @return bool
+     */
+    public function isPending()
+    {
+         return $this->execCode === Api::EXECCODE_SDD_PENDING_PROCESSING;
+    }
 }
