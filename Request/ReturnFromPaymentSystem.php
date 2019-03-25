@@ -51,6 +51,10 @@ class ReturnFromPaymentSystem
      * @param string $paymentNumber
      * @param string $transactionId
      * @param string $message
+     * @param string $secureStatus
+     * @param string $secureSignatureStatus
+     * @param string $secureGlobalStatus
+     * @param string $secureEnrollStatus
      */
     public function __construct(
         $execCode,
