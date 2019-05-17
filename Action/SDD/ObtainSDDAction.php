@@ -78,6 +78,7 @@ class ObtainSDDAction implements ActionInterface, GatewayAwareInterface, ApiAwar
         $this->gateway->execute($renderTemplate = new RenderTemplate($this->template, [
             'actionUrl' => $token ? $token->getTargetUrl() : null,
             'token' => $token,
+            'amount' => $model['AMOUNT'] / 100,
         ]));
 
         throw new HttpResponse($renderTemplate->getResult());

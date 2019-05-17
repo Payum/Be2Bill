@@ -85,6 +85,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
             'hostedFieldsJsLibUrl' => $api->getHostedFieldsJsLibUrl(),
             'brandDetectorJsLibUrl' => $api->getBrandDetectorJsLibUrl(),
             'token' => $token,
+            'amount' => $model['AMOUNT'] / 100,
         ]));
 
         throw new HttpResponse($renderTemplate->getResult());
