@@ -2,6 +2,7 @@
 
 namespace Payum\Be2Bill\Action\SDD;
 
+use Payum\Be2Bill\Model\PaymentInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
