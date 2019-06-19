@@ -28,9 +28,6 @@
         "php-http/guzzle6-adapter": "^1.0",
         "symfony/phpunit-bridge": "^3.1|^4"
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "autoload": {
         "psr-0": { "Payum\\Be2Bill": "" }
     },
