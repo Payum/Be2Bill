@@ -257,7 +257,6 @@ class Api
     {
         $headers = array(
             'Content-Type' => 'application/x-www-form-urlencoded',
-            'Content-Type' => 'application/x-www-form-urlencoded',
         );
 
         $request = $this->messageFactory->createRequest('POST', $this->getApiEndpoint(), $headers, http_build_query($fields));
