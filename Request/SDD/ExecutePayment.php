@@ -61,7 +61,6 @@ class ExecutePayment extends Generic
     {
         parent::__construct($model);
 
-        $this->model = $model;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->address = $address;
