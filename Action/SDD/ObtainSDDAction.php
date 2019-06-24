@@ -42,7 +42,7 @@ class ObtainSDDAction implements ActionInterface, GatewayAwareInterface, ApiAwar
     public function execute($request)
     {
         RequestNotSupportedException::assertSupports($this, $request);
-        /** @var $request ObtainSDDData */
+        /** @var ObtainSDDData $request  */
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
         if ($model['EXECCODE']) {

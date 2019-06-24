@@ -27,7 +27,7 @@ class Callback
     private $message;
 
     /**
-     * @param bool $execCode
+     * @param string $execCode
      * @param string $paymentNumber
      * @param string $transactionId
      * @param string $message

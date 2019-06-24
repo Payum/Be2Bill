@@ -42,7 +42,7 @@ class ObtainCartTokenAction implements ActionInterface, GatewayAwareInterface, A
     public function execute($request)
     {
         RequestNotSupportedException::assertSupports($this, $request);
-        /** @var $request ObtainCartToken */
+        /** @var ObtainCartToken $request  */
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
         if ($model['HFTOKEN']) {
