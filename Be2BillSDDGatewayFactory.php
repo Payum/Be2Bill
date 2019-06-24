@@ -51,7 +51,7 @@ class Be2BillSDDGatewayFactory extends GatewayFactory
             ];
 
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = ['identifier', 'password'];
+            $config['payum.required_options'] = ['sdd_identifier', 'password', 'apikeyid', 'sdd_secret'];
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
