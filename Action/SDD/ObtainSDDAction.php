@@ -16,9 +16,8 @@ use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\RenderTemplate;
 use Payum\Core\Reply\HttpResponse;
 
-class ObtainSDDAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
+class ObtainSDDAction implements ActionInterface, GatewayAwareInterface
 {
-    use ApiAwareTrait;
     use GatewayAwareTrait;
 
     /**
@@ -32,7 +31,6 @@ class ObtainSDDAction implements ActionInterface, GatewayAwareInterface, ApiAwar
     public function __construct($template)
     {
         $this->template = $template;
-        $this->apiClass = Api::class;
     }
 
     /**
@@ -53,7 +51,7 @@ class ObtainSDDAction implements ActionInterface, GatewayAwareInterface, ApiAwar
         $this->gateway->execute($getHttpRequest);
         $keyNames = [
             'BILLINGFIRSTNAME', 'BILLINGLASTNAME', 'BILLINGADDRESS',
-            'BILLINGCITY', 'BILLINGCOUNTRY', 'BILLINGMOBILEPHONE', 'BILLINGPOSTALCODE',
+            'BILLINGCITY', 'BILLINGCOUNTRY', 'BILLINGMOBILEPHONE', 'BILLINGPOSTALCODE','CLIENTGENDER'
         ];
 
         if ($getHttpRequest->method === 'POST' && $this->isIssetAllKeys($getHttpRequest->request, $keyNames)) {
