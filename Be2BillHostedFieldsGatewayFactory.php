@@ -54,7 +54,14 @@ class Be2BillHostedFieldsGatewayFactory extends GatewayFactory
             ];
 
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = ['identifier', 'password'];
+            $config['payum.required_options'] = [
+                'identifier',
+                'password',
+                'apikeyid',
+                'secret',
+                'amex_identifier',
+                'amex_secret',
+            ];
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
