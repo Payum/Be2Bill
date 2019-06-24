@@ -32,8 +32,8 @@ class ExecutePaymentAction implements ActionInterface, ApiAwareInterface, Gatewa
      */
     public function execute($request)
     {
-        /** @var ExecutePayment $request */
         RequestNotSupportedException::assertSupports($this, $request);
+        /** @var ExecutePayment $request */
         $model = new ArrayObject($request->getModel());
         $model->validateNotEmpty(['HFTOKEN']);
 
